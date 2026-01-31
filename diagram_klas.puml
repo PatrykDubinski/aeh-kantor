@@ -1,0 +1,81 @@
+@startuml
+title Diagram klas - System Kantoru Wymiany Walut
+
+package "Web Service (Rails API)" {
+  class User {
+    +id: UUID
+    +email: string
+    +password_digest: string
+    +base_currency: string
+    +created_at: datetime
+    +updated_at: datetime
+    +authenticate(password): boolean
+    +generate_token(): string
+  }
+
+  class Wallet {
+    +id: UUID
+    +user_id: UUID
+    +currency: string
+    +balance: decimal
+    +update_balance(amount: decimal): void
+  }
+
+  class Transaction {
+    +id: UUID
+    +user_id: UUID
+    +kind: enum {topup, buy, sell}
+    +from_currency: string
+    +to_currency: string
+    +amount_from: decimal
+    +amount_to: decimal
+    +rate: decimal
+    +created_at: datetime
+  }
+
+  class ExchangeRate {
+    +id: UUID
+    +code: string
+    +currency: string
+    +rate: decimal
+    +date: date
+    +fetched_at: datetime
+  }
+
+  class NBPClient {
+    +fetch_latest(): JSON
+    +fetch_history(code: string, start: date, end: date): JSON
+    +parse_rates(): ExchangeRate[]
+  }
+
+  User "1" -- "0..*" Wallet : posiada >
+  User "1" -- "0..*" Transaction : wykonuje >
+  Transaction "*" --> "1" ExchangeRate : używa kursu
+}
+
+package "Aplikacja mobilna (React)" {
+  class UserModel {
+    +email: string
+    +token: string
+    +base_currency: string
+  }
+
+  class WalletView {
+    +show_balance(): void
+    +update_wallet(): void
+  }
+
+  class ExchangeForm {
+    +select_currency(): void
+    +submit_transaction(): void
+  }
+
+  class RatesView {
+    +fetch_rates(): void
+    +display_rates(): void
+  }
+
+  UserModel --> "1" WalletView : posiada dane
+  ExchangeForm --> "1" RatesView : używa kursów
+}
+@enduml

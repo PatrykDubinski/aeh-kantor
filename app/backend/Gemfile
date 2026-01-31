@@ -1,0 +1,19 @@
+source 'https://rubygems.org'
+
+gem 'rails', '~> 7.1.0'
+gem 'pg'
+gem 'puma'
+gem 'rack-cors'
+gem 'jwt'
+gem 'bcrypt', '~> 3.1.7'
+gem 'httparty'
+gem 'bootsnap', require: false
+gem 'rswag-ui'
+gem 'rswag-api'
+gem 'rswag-specs'
+
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'faker'
+end

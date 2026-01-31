@@ -1,0 +1,36 @@
+@startuml
+title Diagram przypadków użycia - System mobilny kantoru wymiany walut
+
+actor "Użytkownik" as User
+actor "API NBP" as NBP
+
+rectangle "System Kantoru" {
+  usecase "UC1: Rejestracja użytkownika" as UC1
+  usecase "UC2: Logowanie użytkownika" as UC2
+  usecase "UC3: Zasilenie konta" as UC3
+  usecase "UC4: Podgląd stanu konta" as UC4
+  usecase "UC5: Podgląd aktualnych kursów walut" as UC5
+  usecase "UC6: Podgląd archiwalnych kursów walut" as UC6
+  usecase "UC7: Kupno waluty" as UC7
+  usecase "UC8: Sprzedaż waluty" as UC8
+  usecase "UC9: Przegląd historii transakcji" as UC9
+  usecase "UC10: Alert kursowy" as UC10
+  usecase "UC11: Synchronizacja kursów z API NBP" as UC11
+}
+
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+User --> UC5
+User --> UC6
+User --> UC7
+User --> UC8
+User --> UC9
+User --> UC10
+
+UC11 <-- NBP
+UC5 --> UC11 : "pobiera dane"
+UC6 --> UC11
+
+@enduml

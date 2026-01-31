@@ -1,0 +1,48 @@
+@startuml
+title ERD - System Kantoru Wymiany Walut
+
+entity users {
+  * id : uuid
+  --
+  email : varchar
+  password_digest : varchar
+  base_currency : varchar
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+entity wallets {
+  * id : uuid
+  --
+  user_id : uuid
+  currency : varchar
+  balance : numeric(15,4)
+  updated_at : timestamp
+}
+
+entity transactions {
+  * id : uuid
+  --
+  user_id : uuid
+  kind : varchar
+  from_currency : varchar
+  to_currency : varchar
+  amount_from : numeric(15,4)
+  amount_to : numeric(15,4)
+  rate : numeric(18,8)
+  created_at : timestamp
+}
+
+entity exchange_rates {
+  * id : uuid
+  --
+  code : varchar
+  currency : varchar
+  rate : numeric(18,8)
+  date : date
+  fetched_at : timestamp
+}
+
+users ||--o{ wallets : posiada
+users ||--o{ transactions : wykonuje
+@enduml

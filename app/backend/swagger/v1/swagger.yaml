@@ -1,0 +1,133 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/auth/register":
+    post:
+      summary: Register a new user
+      tags:
+      - Authentication
+      parameters: []
+      responses:
+        '201':
+          description: user created
+        '422':
+          description: validation error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+              - email
+              - password
+  "/auth/login":
+    post:
+      summary: Login user
+      tags:
+      - Authentication
+      parameters: []
+      responses:
+        '200':
+          description: successful login
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+              - email
+              - password
+  "/rates/latest":
+    get:
+      summary: Get latest currency rates from NBP
+      tags:
+      - Rates
+      responses:
+        '200':
+          description: rates returned
+  "/rates/history":
+    get:
+      summary: Get historical currency rates
+      tags:
+      - Rates
+      parameters:
+      - name: currency
+        in: query
+        schema:
+          type: string
+      - name: start_date
+        in: query
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: history returned
+  "/transactions":
+    get:
+      summary: List user transactions
+      tags:
+      - Transactions
+      responses:
+        '200':
+          description: transactions list
+    post:
+      summary: Create a buy/sell transaction
+      tags:
+      - Transactions
+      parameters: []
+      responses:
+        '201':
+          description: created
+        '422':
+          description: error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currency:
+                  type: string
+                amount:
+                  type: number
+                operation:
+                  type: string
+                  enum:
+                  - BUY
+                  - SELL
+              required:
+              - currency
+              - amount
+              - operation
+  "/wallet":
+    get:
+      summary: Get wallet balance
+      tags:
+      - Wallet
+      responses:
+        '200':
+          description: wallet returned
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
