@@ -56,7 +56,6 @@ export default function ExchangeScreen() {
             </ThemedView>
 
             <ThemedView style={styles.content}>
-                {/* Transaction Type Toggle */}
                 <View style={[styles.card, colorScheme === 'dark' && styles.darkCard, styles.shadow]}>
                     <ThemedText style={styles.label}>{t('transaction_type')}</ThemedText>
                     <View style={styles.directionContainer}>
@@ -87,7 +86,6 @@ export default function ExchangeScreen() {
                     </View>
                 </View>
 
-                {/* Currency Selector */}
                 <View style={[styles.card, colorScheme === 'dark' && styles.darkCard, styles.shadow]}>
                     <ThemedText style={styles.label}>{t('select_currency')}</ThemedText>
                     {loadingRates ? (
@@ -116,7 +114,6 @@ export default function ExchangeScreen() {
                     )}
                 </View>
 
-                {/* Amount Input */}
                 <View style={[styles.card, colorScheme === 'dark' && styles.darkCard, styles.shadow]}>
                     <ThemedText style={styles.label}>{t('amount')}</ThemedText>
                     <View style={[
